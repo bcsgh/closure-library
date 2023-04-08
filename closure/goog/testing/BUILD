@@ -215,13 +215,14 @@ closure_js_library(
     testonly = True,
     srcs = [
         "mock.js",
-        "mockmatchers.js",
     ],
     lenient = True,
+    exports = [":mockmatchers_impl"],
     deps = [
         ":asserts",
         ":jsunitexception",
         ":mockinterface",
+        ":mockmatchers_impl",
         "//closure/goog/array",
         "//closure/goog/asserts",
         "//closure/goog/dom",
@@ -288,8 +289,25 @@ closure_js_library(
 closure_js_library(
     name = "mockmatchers",
     testonly = True,
-    lenient = True,
     exports = [":mock"],
+)
+
+closure_js_library(
+    name = "mockmatchers_impl",
+    testonly = True,
+    srcs = ["mockmatchers.js"],
+    lenient = True,
+    deps = [
+        ":asserts",
+        ":jsunitexception",
+        ":mockinterface",
+        "//closure/goog/array",
+        "//closure/goog/asserts",
+        "//closure/goog/dom",
+        "//closure/goog/object",
+        "//closure/goog/promise",
+        "//closure/goog/promise:resolver",
+    ],
 )
 
 closure_js_library(

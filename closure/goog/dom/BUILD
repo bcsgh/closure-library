@@ -248,17 +248,21 @@ closure_js_library(
         "controlrange.js",
         "multirange.js",
         "range.js",
-        "savedcaretrange.js",
-        "textrange.js",
     ],
     lenient = True,
+    exports = [
+        ":savedcaretrange_impl",
+        ":textrange_impl",
+    ],
     deps = [
         ":abstractrange",
         ":browserfeature",
         ":dom",
         ":nodetype",
+        ":savedcaretrange_impl",
         ":tagiterator",
         ":tagname",
+        ":textrange_impl",
         ":textrangeiterator",
         "//closure/goog/array",
         "//closure/goog/dom/browserrange",
@@ -298,6 +302,18 @@ closure_js_library(
 alias(
     name = "savedcaretrange",
     actual = ":range",
+)
+
+closure_js_library(
+    name = "savedcaretrange_impl",
+    srcs = ["savedcaretrange.js"],
+    lenient = True,
+    deps = [
+        ":abstractrange",
+        ":dom",
+        ":tagname",
+        "//closure/goog/string",
+    ],
 )
 
 alias(
@@ -355,6 +371,22 @@ closure_js_library(
 alias(
     name = "textrange",
     actual = ":range",
+)
+
+closure_js_library(
+    name = "textrange_impl",
+    srcs = ["textrange.js"],
+    lenient = True,
+    deps = [
+        ":abstractrange",
+        ":dom",
+        ":savedcaretrange_impl",
+        ":tagname",
+        ":textrangeiterator",
+        "//closure/goog/array",
+        "//closure/goog/dom/browserrange",
+        "//closure/goog/useragent",
+    ],
 )
 
 closure_js_library(

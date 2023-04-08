@@ -6,17 +6,20 @@ licenses(["notice"])
 
 closure_js_library(
     name = "browserchannel",
-    srcs = [
-        "browserchannel.js",
-        "browserchannelexecutionhooks.js",
-        "browserchannelserverreachability.js",
-        "browserchannelstats.js",
-        "browsertestchannel.js",
-        "channelrequest.js",
-    ],
+    srcs = ["browserchannel.js"],
     lenient = True,
+    exports = [
+        ":browserchannelstats",
+        ":browserchannel_impl",
+        ":browsertestchannel_impl",
+        ":channelrequest_impl",
+    ],
     deps = [
+        ":browserchannelstats",
+        ":browserchannel_impl",
+        ":browsertestchannel_impl",
         ":channeldebug",
+        ":channelrequest_impl",
         ":errorcode",
         ":eventtype",
         ":tmpnetwork",
@@ -47,6 +50,40 @@ closure_js_library(
         "//closure/goog/timer",
         "//closure/goog/uri",
         "//closure/goog/useragent",
+    ],
+)
+
+closure_js_library(
+    name = "browserchannelstats",
+    srcs = ["browserchannelstats.js"],
+    lenient = True,
+    deps = [
+        "//closure/goog/events:event",
+        "//closure/goog/events:eventtarget",
+    ],
+)
+
+closure_js_library(
+    name = "browserchannel_impl",
+    srcs = [
+        "browserchannelserverreachability.js",
+        "browserchannelexecutionhooks.js",
+    ],
+    lenient = True,
+)
+
+closure_js_library(
+    name = "browsertestchannel_impl",
+    srcs = ["browsertestchannel.js"],
+    lenient = True,
+    deps = [
+        ":browserchannel_impl",
+        ":channelrequest_impl",
+        ":browserchannelstats",
+        ":tmpnetwork",
+        ":xhrio",
+        "//closure/goog/json:nativejsonprocessor",
+        "//closure/goog/string:parser",
     ],
 )
 
@@ -96,6 +133,32 @@ closure_js_library(
 alias(
     name = "channelrequest",
     actual = ":browserchannel",
+)
+
+closure_js_library(
+    name = "channelrequest_impl",
+    srcs = ["channelrequest.js"],
+    lenient = True,
+    deps = [
+        ":browserchannel_impl",
+        ":browserchannelstats",
+        ":errorcode",
+        ":eventtype",
+        ":xmlhttp",
+        "//closure/goog/async:throttle",
+        "//closure/goog/disposable",
+        "//closure/goog/dom:safe",
+        "//closure/goog/dom:tagname",
+        "//closure/goog/events:event",
+        "//closure/goog/events:eventhandler",
+        "//closure/goog/html:safeurl",
+        "//closure/goog/html:uncheckedconversions",
+        "//closure/goog/object",
+        "//closure/goog/string",
+        "//closure/goog/string:const",
+        "//closure/goog/timer",
+        "//closure/goog/useragent",
+    ],
 )
 
 closure_js_library(
@@ -315,6 +378,7 @@ closure_js_library(
     name = "mockiframeio",
     srcs = ["mockiframeio.js"],
     lenient = True,
+    testonly = True,
     deps = [
         ":errorcode",
         ":eventtype",

@@ -83,10 +83,31 @@ closure_js_library(
     name = "events",
     srcs = [
         "eventhandler.js",
-        "events.js",
         "eventtarget.js",
         "eventwrapper.js",
     ],
+    lenient = True,
+    exports = [":events_impl"],
+    deps = [
+        ":browserevent",
+        ":browserfeature",
+        ":event",
+        ":eventid",
+        ":events_impl",
+        ":listenable",
+        ":listener",
+        ":listenermap",
+        "//closure/goog/asserts",
+        "//closure/goog/debug:entrypointregistry",
+        "//closure/goog/debug:errorhandler",
+        "//closure/goog/disposable",
+        "//closure/goog/object",
+    ],
+)
+
+closure_js_library(
+    name = "events_impl",
+    srcs = ["events.js"],
     lenient = True,
     deps = [
         ":browserevent",

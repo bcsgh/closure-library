@@ -7,13 +7,12 @@ licenses(["notice"])
 closure_js_library(
     name = "assertthat",
     testonly = True,
-    srcs = [
-        "assertthat.js",
-        "matchererror.js",
-    ],
+    srcs = ["assertthat.js"],
     lenient = True,
+    exports = [":matchererror"],
     deps = [
         ":matcher",
+        ":matchererror",
         "//closure/goog/debug:error",
     ],
 )
@@ -69,6 +68,16 @@ closure_js_library(
 )
 
 closure_js_library(
+    name = "matchererror",
+    testonly = True,
+    srcs = ["matchererror.js"],
+    lenient = True,
+    deps = [
+        "//closure/goog/debug:error",
+    ],
+)
+
+closure_js_library(
     name = "matchers",
     testonly = True,
     srcs = [
@@ -76,6 +85,23 @@ closure_js_library(
         "dictionarymatcher.js",
         "logicmatcher.js",
         "matchers.js",
+    ],
+    lenient = True,
+    exports = [":matchers_impl"],
+    deps = [
+        ":matcher",
+        ":matchers_impl",
+        "//closure/goog/array",
+        "//closure/goog/asserts",
+        "//closure/goog/object",
+        "//closure/goog/string",
+    ],
+)
+
+closure_js_library(
+    name = "matchers_impl",
+    testonly = True,
+    srcs = [
         "numbermatcher.js",
         "objectmatcher.js",
         "stringmatcher.js",
@@ -83,9 +109,7 @@ closure_js_library(
     lenient = True,
     deps = [
         ":matcher",
-        "//closure/goog/array",
         "//closure/goog/asserts",
-        "//closure/goog/object",
         "//closure/goog/string",
     ],
 )

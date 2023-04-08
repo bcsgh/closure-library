@@ -51,13 +51,14 @@ closure_js_library(
     name = "moduleinfo",
     srcs = [
         "moduleinfo.js",
-        "moduleloadfailuretype.js",
     ],
     lenient = True,
+    exports= [":moduleloadfailuretype"],
     deps = [
         ":basemodule",
         ":module",
         ":moduleloadcallback",
+        ":moduleloadfailuretype",
         "//closure/goog/async:throwexception",
         "//closure/goog/disposable",
         "//closure/goog/functions",
@@ -73,6 +74,12 @@ closure_js_library(
         ":module",
         "//closure/goog/debug:entrypointregistry",
     ],
+)
+
+closure_js_library(
+    name = "moduleloadfailuretype",
+    srcs = ["moduleloadfailuretype.js"],
+    lenient = True,
 )
 
 closure_js_library(
