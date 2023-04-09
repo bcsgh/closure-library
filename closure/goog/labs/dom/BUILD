@@ -5,14 +5,26 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])
 
 closure_js_library(
-    name = "pagevisibilitymonitor",
-    srcs = [
-        "pagevisibilityevent.js",
-        "pagevisibilitymonitor.js",
-    ],
+    name = "pagevisibilityevent",
+    srcs = ["pagevisibilityevent.js"],
     lenient = True,
-    exports =[":pagevisibilitystate"],
     deps = [
+        ":pagevisibilitystate",
+        "//closure/goog/events:event",
+        "//closure/goog/events:eventtype",
+    ],
+)
+
+closure_js_library(
+    name = "pagevisibilitymonitor",
+    srcs = ["pagevisibilitymonitor.js"],
+    lenient = True,
+    exports =[
+        ":pagevisibilityevent",
+        ":pagevisibilitystate",
+    ],
+    deps = [
+        ":pagevisibilityevent",
         ":pagevisibilitystate",
         "//closure/goog/dom",
         "//closure/goog/dom:vendor",

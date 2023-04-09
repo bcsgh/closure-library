@@ -22,7 +22,6 @@ goog.require('goog.asserts');
 goog.require('goog.async.Throttle');
 goog.require('goog.dispose');
 goog.require('goog.events.EventHandler');
-goog.require('goog.labs.net.webChannel.Channel');
 goog.require('goog.labs.net.webChannel.WebChannelDebug');
 goog.require('goog.labs.net.webChannel.environment');
 goog.require('goog.labs.net.webChannel.requestStats');
@@ -35,6 +34,7 @@ goog.require('goog.string');
 goog.require('goog.userAgent');
 goog.requireType('goog.Uri');
 goog.requireType('goog.events.Event');
+goog.requireType('goog.labs.net.webChannel.Channel');
 goog.requireType('goog.labs.net.webChannel.Wire.QueuedMap');
 goog.requireType('goog.net.XhrIo');
 
@@ -301,7 +301,6 @@ goog.labs.net.webChannel.FetchResponseState = function() {
 goog.scope(function() {
 'use strict';
 const WebChannel = goog.net.WebChannel;
-const Channel = goog.labs.net.webChannel.Channel;
 const ChannelRequest = goog.labs.net.webChannel.ChannelRequest;
 const FetchResponseState = goog.labs.net.webChannel.FetchResponseState;
 const requestStats = goog.labs.net.webChannel.requestStats;

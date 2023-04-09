@@ -34,31 +34,43 @@ alias(
 )
 
 closure_js_library(
-    name = "message",
+    name = "lazydeserializer_impl",
     srcs = ["lazydeserializer.js"],
     lenient = True,
-    exports = [
-        ":descriptors",
-        ":message_impl",
-    ],
     deps = [
         ":message_impl",
-        "//closure/goog/array",
+        ":serializer_impl",
         "//closure/goog/asserts",
-        "//closure/goog/object",
-        "//closure/goog/string",
+    ],
+)
+
+closure_js_library(
+    name = "message",
+    exports = [
+        ":descriptors",
+        ":lazydeserializer_impl",
+        ":message_impl",
+        ":serializer_impl",
     ],
 )
 
 closure_js_library(
     name = "message_impl",
-    srcs = [
-        "message.js",
-        "serializer.js",
-    ],
+    srcs = ["message.js"],
     lenient = True,
     deps = [
         ":descriptors",
+        "//closure/goog/asserts",
+    ],
+)
+
+closure_js_library(
+    name = "serializer_impl",
+    srcs = ["serializer.js"],
+    lenient = True,
+    deps = [
+        ":descriptors",
+        ":message_impl",
         "//closure/goog/asserts",
     ],
 )

@@ -105,14 +105,24 @@ closure_js_library(
 
 closure_js_library(
     name = "util",
-    srcs = [
-        "useragent.js",
-        "util.js",
+    srcs = ["util.js"],
+    lenient = True,
+    exports = [
+        ":useragent_impl",
     ],
+    deps = [
+        ":useragent_impl",
+        "//closure/goog/flags",
+        "//closure/goog/string:internal",
+    ],
+)
+
+closure_js_library(
+    name = "useragent_impl",
+    srcs = ["useragent.js"],
     lenient = True,
     deps = [
         "//closure/goog/flags",
-        "//closure/goog/string:internal",
     ],
 )
 

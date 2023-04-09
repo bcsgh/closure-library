@@ -298,18 +298,28 @@ closure_js_library(
 )
 
 closure_js_library(
-    name = "keyhandler",
-    srcs = [
-        "keyevent.js",
-        "keyhandler.js",
-    ],
+    name = "keyevent",
+    srcs = ["keyevent.js"],
     lenient = True,
+    deps = [
+        ":browserevent",
+    ],
+)
+
+closure_js_library(
+    name = "keyhandler",
+    srcs = ["keyhandler.js"],
+    lenient = True,
+    exports = [
+        ":keyevent",
+    ],
     deps = [
         ":browserevent",
         ":events",
         ":eventtarget",
         ":eventtype",
         ":keycodes",
+        ":keyevent",
         "//closure/goog/useragent",
     ],
 )

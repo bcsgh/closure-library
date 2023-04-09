@@ -37,7 +37,6 @@ closure_js_library(
     name = "abstractgraphics_impl",
     srcs = [
         "ellipseelement.js",
-        "fill.js",
         "font.js",
         "groupelement.js",
         "imageelement.js",
@@ -48,10 +47,14 @@ closure_js_library(
         "stroke.js",
         "textelement.js",
     ],
+    exports = [
+        ":fill_impl",
+    ],
     lenient = True,
     deps = [
         ":affinetransform_impl",
         ":element_impl",
+        ":fill_impl",
         ":strokeandfillelement_impl",
         "//closure/goog/array",
         "//closure/goog/asserts",
@@ -79,14 +82,33 @@ alias(
 )
 
 closure_js_library(
-    name = "canvasgraphics",
-    srcs = [
-        "canvaselement.js",
-        "canvasgraphics.js",
-    ],
+    name = "canvaselement_impl",
+    srcs = ["canvaselement.js"],
     lenient = True,
     deps = [
         ":abstractgraphics",
+        "//closure/goog/array",
+        "//closure/goog/dom",
+        "//closure/goog/dom:safe",
+        "//closure/goog/dom:tagname",
+        "//closure/goog/html:safehtml",
+        "//closure/goog/html:uncheckedconversions",
+        "//closure/goog/math",
+        "//closure/goog/string",
+        "//closure/goog/string:const",
+    ],
+)
+
+closure_js_library(
+    name = "canvasgraphics",
+    srcs = ["canvasgraphics.js"],
+    lenient = True,
+    exports = [
+        ":canvaselement_impl",
+    ],
+    deps = [
+        ":abstractgraphics",
+        ":canvaselement_impl",
         "//closure/goog/array",
         "//closure/goog/dom",
         "//closure/goog/dom:safe",
@@ -129,6 +151,12 @@ alias(
 alias(
     name = "fill",
     actual = ":abstractgraphics",
+)
+
+closure_js_library(
+    name = "fill_impl",
+    srcs = ["fill.js"],
+    lenient = True,
 )
 
 alias(
@@ -226,15 +254,26 @@ alias(
 )
 
 closure_js_library(
-    name = "svggraphics",
-    srcs = [
-        "svgelement.js",
-        "svggraphics.js",
-    ],
+    name = "svgelement_impl",
+    srcs = ["svgelement.js"],
     lenient = True,
     deps = [
         ":abstractgraphics",
+        "//closure/goog/dom",
+    ],
+)
+
+closure_js_library(
+    name = "svggraphics",
+    srcs = ["svggraphics.js"],
+    lenient = True,
+    exports = [
+        ":svgelement_impl",
+    ],
+    deps = [
+        ":abstractgraphics",
         ":lineargradient",
+        ":svgelement_impl",
         "//closure/goog/dom",
         "//closure/goog/events:eventhandler",
         "//closure/goog/events:eventtype",

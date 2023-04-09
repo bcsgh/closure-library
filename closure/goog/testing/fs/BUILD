@@ -18,14 +18,15 @@ closure_js_library(
 closure_js_library(
     name = "filesystem",
     testonly = True,
-    srcs = [
-        "entry.js",
-        "filesystem.js",
-    ],
+    srcs = ["filesystem.js"],
     lenient = True,
-    exports = [":filewriter_impl"],
+    exports = [
+        ":entry_impl",
+        ":filewriter_impl",
+    ],
     deps = [
         ":blob",
+        ":entry_impl",
         ":file",
         ":filewriter_impl",
         ":progressevent",
@@ -70,6 +71,27 @@ closure_js_library(
 alias(
     name = "entry",
     actual = ":filesystem",
+)
+
+closure_js_library(
+    name = "entry_impl",
+    testonly = True,
+    srcs = ["entry.js"],
+    lenient = True,
+    deps = [
+        ":file",
+        ":filewriter_impl",
+        "//closure/goog/array",
+        "//closure/goog/asserts",
+        "//closure/goog/fs:entryimpl",
+        "//closure/goog/fs:error",
+        "//closure/goog/fs:filesystem",
+        "//closure/goog/functions",
+        "//closure/goog/object",
+        "//closure/goog/string",
+        "//closure/goog/timer",
+        "//third_party/closure/goog/mochikit/async:deferred",
+    ],
 )
 
 alias(

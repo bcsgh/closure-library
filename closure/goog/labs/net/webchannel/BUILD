@@ -15,11 +15,11 @@ closure_js_library(
 
 closure_js_library(
     name = "channel",
-    srcs = [
-        "channel.js",
-        "channelrequest.js",
-    ],
+    srcs = ["channel.js"],
     lenient = True,
+    exports = [
+        "channelrequest_impl",
+    ],
     deps = [
         ":connectionstate",
         ":environment",
@@ -47,6 +47,29 @@ closure_js_library(
 alias(
     name = "channelrequest",
     actual = ":channel",
+)
+
+closure_js_library(
+    name = "channelrequest_impl",
+    srcs = ["channelrequest.js"],
+    lenient = True,
+    deps = [
+        ":environment",
+        ":requeststats",
+        ":webchanneldebug",
+        "//closure/goog/asserts",
+        "//closure/goog/async:throttle",
+        "//closure/goog/disposable",
+        "//closure/goog/events:eventhandler",
+        "//closure/goog/labs/net:webchannel",
+        "//closure/goog/net:errorcode",
+        "//closure/goog/net:eventtype",
+        "//closure/goog/net:xmlhttp",
+        "//closure/goog/object",
+        "//closure/goog/string",
+        "//closure/goog/timer",
+        "//closure/goog/useragent",
+    ],
 )
 
 closure_js_library(

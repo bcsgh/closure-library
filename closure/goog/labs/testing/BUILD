@@ -80,12 +80,7 @@ closure_js_library(
 closure_js_library(
     name = "matchers",
     testonly = True,
-    srcs = [
-        "decoratormatcher.js",
-        "dictionarymatcher.js",
-        "logicmatcher.js",
-        "matchers.js",
-    ],
+    srcs = ["matchers.js"],
     lenient = True,
     exports = [":matchers_impl"],
     deps = [
@@ -102,6 +97,9 @@ closure_js_library(
     name = "matchers_impl",
     testonly = True,
     srcs = [
+        "decoratormatcher.js",
+        "dictionarymatcher.js",
+        "logicmatcher.js",
         "numbermatcher.js",
         "objectmatcher.js",
         "stringmatcher.js",
@@ -109,7 +107,9 @@ closure_js_library(
     lenient = True,
     deps = [
         ":matcher",
+        "//closure/goog/array",
         "//closure/goog/asserts",
+        "//closure/goog/object",
         "//closure/goog/string",
     ],
 )

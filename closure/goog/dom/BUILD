@@ -10,6 +10,18 @@ alias(
 )
 
 closure_js_library(
+    name = "abstractmultirange_impl",
+    srcs = ["abstractmultirange.js"],
+    lenient = True,
+    deps = [
+        ":abstractrange",
+        ":dom",
+        ":textrange_impl",
+        "//closure/goog/array",
+    ],
+)
+
+closure_js_library(
     name = "abstractrange",
     srcs = [
         "abstractrange.js",
@@ -96,6 +108,23 @@ closure_js_library(
 alias(
     name = "controlrange",
     actual = ":range",
+)
+
+closure_js_library(
+    name = "controlrange_impl",
+    srcs = ["controlrange.js"],
+    lenient = True,
+    deps = [
+        ":abstractrange",
+        ":abstractmultirange_impl",
+        ":dom",
+        ":savedcaretrange_impl",
+        ":tagiterator",
+        ":textrange_impl",
+        "//closure/goog/array",
+        "//closure/goog/iter",
+        "//closure/goog/useragent",
+    ],
 )
 
 closure_js_library(
@@ -218,6 +247,22 @@ alias(
 )
 
 closure_js_library(
+    name = "multirange_impl",
+    srcs = ["multirange.js"],
+    lenient = True,
+    deps = [
+        ":abstractrange",
+        ":abstractmultirange_impl",
+        ":dom",
+        ":savedcaretrange_impl",
+        ":textrange_impl",
+        "//closure/goog/array",
+        "//closure/goog/iter",
+        "//closure/goog/log",
+    ],
+)
+
+closure_js_library(
     name = "nodeiterator",
     srcs = ["nodeiterator.js"],
     lenient = True,
@@ -245,21 +290,22 @@ closure_js_library(
 
 closure_js_library(
     name = "range",
-    srcs = [
-        "abstractmultirange.js",
-        "controlrange.js",
-        "multirange.js",
-        "range.js",
-    ],
+    srcs = ["range.js"],
     lenient = True,
     exports = [
+        ":abstractmultirange_impl",
+        ":controlrange_impl",
+        ":multirange_impl",
         ":savedcaretrange_impl",
         ":textrange_impl",
     ],
     deps = [
         ":abstractrange",
+        ":abstractmultirange_impl",
         ":browserfeature",
+        ":controlrange_impl",
         ":dom",
+        ":multirange_impl",
         ":nodetype",
         ":savedcaretrange_impl",
         ":tagiterator",
