@@ -6,6 +6,7 @@ licenses(["notice"])
 
 closure_js_library(
     name = "mock",
+    testonly = 1,
     srcs = ["mock.js"],
     lenient = True,
     deps = [

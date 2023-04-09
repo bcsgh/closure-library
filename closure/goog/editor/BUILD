@@ -60,16 +60,17 @@ closure_js_library(
 
 closure_js_library(
     name = "field",
-    srcs = [
-        "field.js",
-        "plugin_impl.js",
-    ],
+    srcs = ["field.js"],
     lenient = True,
+    exports = [
+        ":plugin_impl2",
+    ],
     deps = [
         ":browserfeature",
         ":command",
         ":icontent",
         ":node",
+        ":plugin_impl2",
         ":range",
         "//closure/goog/a11y/aria",
         "//closure/goog/a11y/aria:roles",
@@ -181,6 +182,20 @@ alias(
 )
 
 closure_js_library(
+    name = "plugin_impl2",
+    srcs = ["plugin_impl.js"],
+    lenient = True,
+    deps = [
+        "//closure/goog/events:eventtarget",
+        "//closure/goog/functions",
+        "//closure/goog/log",
+        "//closure/goog/object",
+        "//closure/goog/reflect",
+        "//closure/goog/useragent",
+    ],
+)
+
+closure_js_library(
     name = "range",
     srcs = ["range.js"],
     lenient = True,
@@ -244,13 +259,15 @@ closure_js_library(
 
 closure_js_library(
     name = "table",
-    srcs = [
-        "table.js",
-        "tablecell.js",
-        "tablerow.js",
-    ],
+    srcs = ["table.js"],
     lenient = True,
+    exports = [
+        ":tablecell",
+        ":tablerow",
+    ],
     deps = [
+        ":tablecell",
+        ":tablerow",
         "//closure/goog/asserts",
         "//closure/goog/dom",
         "//closure/goog/dom:nodetype",
@@ -259,4 +276,16 @@ closure_js_library(
         "//closure/goog/string",
         "//closure/goog/style",
     ],
+)
+
+closure_js_library(
+    name = "tablecell",
+    srcs = ["tablecell.js"],
+    lenient = True,
+)
+
+closure_js_library(
+    name = "tablerow",
+    srcs = ["tablerow.js"],
+    lenient = True,
 )

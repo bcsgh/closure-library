@@ -55,14 +55,13 @@ closure_js_library(
 
 closure_js_library(
     name = "indexeddb",
-    srcs = [
-        "indexeddb.js",
-        "transaction.js",
-    ],
+    srcs = ["indexeddb.js"],
     lenient = True,
+    exports = [":transaction_impl"],
     deps = [
         ":error",
         ":objectstore",
+        ":transaction_impl",
         "//closure/goog/events:event",
         "//closure/goog/events:eventhandler",
         "//closure/goog/events:eventtarget",
@@ -93,4 +92,18 @@ closure_js_library(
 alias(
     name = "transaction",
     actual = ":indexeddb",
+)
+
+closure_js_library(
+    name = "transaction_impl",
+    srcs = ["transaction.js"],
+    lenient = True,
+    deps = [
+        ":error",
+        ":objectstore",
+        "//closure/goog/events:event",
+        "//closure/goog/events:eventhandler",
+        "//closure/goog/events:eventtarget",
+        "//third_party/closure/goog/mochikit/async:deferred",
+    ],
 )

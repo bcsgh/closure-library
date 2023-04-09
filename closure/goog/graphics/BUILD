@@ -6,25 +6,19 @@ licenses(["notice"])
 
 closure_js_library(
     name = "abstractgraphics",
-    srcs = [
-        "abstractgraphics.js",
-        "affinetransform.js",
-        "element.js",
-        "ellipseelement.js",
-        "fill.js",
-        "font.js",
-        "groupelement.js",
-        "imageelement.js",
-        "path.js",
-        "pathelement.js",
-        "rectelement.js",
-        "solidfill.js",
-        "stroke.js",
-        "strokeandfillelement.js",
-        "textelement.js",
-    ],
+    srcs = ["abstractgraphics.js"],
     lenient = True,
+    exports = [
+        ":abstractgraphics_impl",
+        ":affinetransform_impl",
+        ":element_impl",
+        ":strokeandfillelement_impl",
+    ],
     deps = [
+        ":abstractgraphics_impl",
+        ":affinetransform_impl",
+        ":element_impl",
+        ":strokeandfillelement_impl",
         "//closure/goog/array",
         "//closure/goog/asserts",
         "//closure/goog/dom",
@@ -39,9 +33,44 @@ closure_js_library(
     ],
 )
 
+closure_js_library(
+    name = "abstractgraphics_impl",
+    srcs = [
+        "ellipseelement.js",
+        "fill.js",
+        "font.js",
+        "groupelement.js",
+        "imageelement.js",
+        "path.js",
+        "pathelement.js",
+        "rectelement.js",
+        "solidfill.js",
+        "stroke.js",
+        "textelement.js",
+    ],
+    lenient = True,
+    deps = [
+        ":affinetransform_impl",
+        ":element_impl",
+        ":strokeandfillelement_impl",
+        "//closure/goog/array",
+        "//closure/goog/asserts",
+        "//closure/goog/events",
+        "//closure/goog/events:eventtarget",
+        "//closure/goog/events:listenable",
+        "//closure/goog/math",
+    ],
+)
+
 alias(
     name = "affinetransform",
     actual = ":abstractgraphics",
+)
+
+closure_js_library(
+    name = "affinetransform_impl",
+    srcs = ["affinetransform.js"],
+    lenient = True,
 )
 
 alias(
@@ -76,6 +105,20 @@ closure_js_library(
 alias(
     name = "element",
     actual = ":abstractgraphics",
+)
+
+closure_js_library(
+    name = "element_impl",
+    srcs = ["element.js"],
+    lenient = True,
+    deps = [
+        ":affinetransform_impl",
+        "//closure/goog/asserts",
+        "//closure/goog/events",
+        "//closure/goog/events:eventtarget",
+        "//closure/goog/events:listenable",
+        "//closure/goog/math",
+    ],
 )
 
 alias(
@@ -166,6 +209,15 @@ alias(
 alias(
     name = "strokeandfillelement",
     actual = ":abstractgraphics",
+)
+
+closure_js_library(
+    name = "strokeandfillelement_impl",
+    srcs = ["strokeandfillelement.js"],
+    lenient = True,
+    deps = [
+        ":element_impl",
+    ],
 )
 
 alias(

@@ -12,13 +12,15 @@ closure_js_library(
 
 closure_js_library(
     name = "promise",
-    srcs = [
-        "promise.js",
-        "resolver.js",
-        "thenable.js",
-    ],
+    srcs = ["promise.js"],
     lenient = True,
+    exports = [
+        ":resolver_impl",
+        ":thenable_impl",
+    ],
     deps = [
+        ":resolver_impl",
+        ":thenable_impl",
         "//closure/goog/asserts",
         "//closure/goog/async:freelist",
         "//closure/goog/async:run",
@@ -35,6 +37,12 @@ alias(
 )
 
 closure_js_library(
+    name = "resolver_impl",
+    srcs = ["resolver.js"],
+    lenient = True,
+)
+
+closure_js_library(
     name = "testsuiteadapter",
     testonly = 1,
     srcs = ["testsuiteadapter.js"],
@@ -45,4 +53,10 @@ closure_js_library(
 alias(
     name = "thenable",
     actual = ":promise",
+)
+
+closure_js_library(
+    name = "thenable_impl",
+    srcs = ["thenable.js"],
+    lenient = True,
 )

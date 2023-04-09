@@ -82,16 +82,17 @@ closure_js_library(
     name = "events",
     srcs = [
         "eventhandler.js",
-        "events.js",
         "eventtarget.js",
         "eventwrapper.js",
     ],
     lenient = True,
+    exports = [":events_impl"],
     deps = [
         ":browserevent",
         ":browserfeature",
         ":event",
         ":eventid",
+        ":events_impl",
         ":listenable",
         ":listener",
         ":listenermap",
@@ -100,6 +101,20 @@ closure_js_library(
         "//closure/goog/debug:errorhandler",
         "//closure/goog/disposable",
         "//closure/goog/object",
+    ],
+)
+
+closure_js_library(
+    name = "events_impl",
+    srcs = ["events.js"],
+    lenient = True,
+    deps = [
+        ":browserevent",
+        ":browserfeature",
+        ":listenable",
+        ":listenermap",
+        "//closure/goog/asserts",
+        "//closure/goog/debug:entrypointregistry",
     ],
 )
 
@@ -126,19 +141,79 @@ closure_js_library(
 
 closure_js_library(
     name = "eventtype",
-    srcs = [
-        "eventtype.js",
-        "mouseasmouseeventtype.js",
-        "mouseevents.js",
-        "pointerasmouseeventtype.js",
-        "pointerastoucheventtype.js",
-        "pointerfallbackeventtype.js",
-        "pointertouchfallbackeventtype.js",
+    exports = [
+        ":eventtype_impl",
+        ":mouseasmouseeventtype",
+        ":mouseevents",
+        ":pointerasmouseeventtype",
+        ":pointerastoucheventtype",
+        ":pointerfallbackeventtype",
+        ":pointertouchfallbackeventtype",
     ],
+)
+
+closure_js_library(
+    name = "eventtype_impl",
+    srcs = ["eventtype.js"],
     lenient = True,
     deps = [
         ":eventtypehelpers",
         "//closure/goog/useragent",
+    ],
+)
+
+closure_js_library(
+    name = "mouseasmouseeventtype",
+    srcs = ["mouseasmouseeventtype.js"],
+    lenient = True,
+    deps = [
+        ":eventtype_impl",
+        ":mouseevents",
+    ],
+)
+
+closure_js_library(
+    name = "mouseevents",
+    srcs = ["mouseevents.js"],
+    lenient = True,
+)
+
+closure_js_library(
+    name = "pointerasmouseeventtype",
+    srcs = ["pointerasmouseeventtype.js"],
+    lenient = True,
+    deps = [
+        ":mouseevents",
+        ":pointerfallbackeventtype",
+    ],
+)
+
+closure_js_library(
+    name = "pointerastoucheventtype",
+    srcs = ["pointerastoucheventtype.js"],
+    lenient = True,
+    deps = [
+        ":pointertouchfallbackeventtype",
+    ],
+)
+
+closure_js_library(
+    name = "pointerfallbackeventtype",
+    srcs = ["pointerfallbackeventtype.js"],
+    lenient = True,
+    deps = [
+        ":eventtypehelpers",
+        ":eventtype_impl",
+    ],
+)
+
+closure_js_library(
+    name = "pointertouchfallbackeventtype",
+    srcs = ["pointertouchfallbackeventtype.js"],
+    lenient = True,
+    deps = [
+        ":eventtypehelpers",
+        ":eventtype_impl",
     ],
 )
 

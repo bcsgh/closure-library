@@ -9,10 +9,11 @@ closure_js_library(
     srcs = [
         "pagevisibilityevent.js",
         "pagevisibilitymonitor.js",
-        "pagevisibilitystate.js",
     ],
     lenient = True,
+    exports =[":pagevisibilitystate"],
     deps = [
+        ":pagevisibilitystate",
         "//closure/goog/dom",
         "//closure/goog/dom:vendor",
         "//closure/goog/events",
@@ -21,4 +22,10 @@ closure_js_library(
         "//closure/goog/events:eventtype",
         "//closure/goog/memoize",
     ],
+)
+
+closure_js_library(
+    name = "pagevisibilitystate",
+    srcs = ["pagevisibilitystate.js"],
+    lenient = True,
 )

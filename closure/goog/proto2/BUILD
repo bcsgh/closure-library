@@ -9,6 +9,20 @@ alias(
     actual = ":message",
 )
 
+closure_js_library(
+    name = "descriptors",
+    srcs = [
+        "descriptor.js",
+        "fielddescriptor.js",
+    ],
+    lenient = True,
+    deps = [
+        "//closure/goog/asserts",
+        "//closure/goog/object",
+        "//closure/goog/string",
+    ],
+)
+
 alias(
     name = "fielddescriptor",
     actual = ":message",
@@ -21,19 +35,31 @@ alias(
 
 closure_js_library(
     name = "message",
+    srcs = ["lazydeserializer.js"],
+    lenient = True,
+    exports = [
+        ":descriptors",
+        ":message_impl",
+    ],
+    deps = [
+        ":message_impl",
+        "//closure/goog/array",
+        "//closure/goog/asserts",
+        "//closure/goog/object",
+        "//closure/goog/string",
+    ],
+)
+
+closure_js_library(
+    name = "message_impl",
     srcs = [
-        "descriptor.js",
-        "fielddescriptor.js",
-        "lazydeserializer.js",
         "message.js",
         "serializer.js",
     ],
     lenient = True,
     deps = [
-        "//closure/goog/array",
+        ":descriptors",
         "//closure/goog/asserts",
-        "//closure/goog/object",
-        "//closure/goog/string",
     ],
 )
 

@@ -6,13 +6,12 @@ licenses(["notice"])
 
 closure_js_library(
     name = "crosspagechannel",
-    srcs = [
-        "crosspagechannel.js",
-        "nativemessagingtransport.js",
-    ],
+    srcs = ["crosspagechannel.js"],
     lenient = True,
+    exports = [":nativemessagingtransport_impl"],
     deps = [
         ":crosspagechannelrole",
+        ":nativemessagingtransport_impl",
         ":transport",
         ":xpc",
         "//closure/goog/asserts",
@@ -49,6 +48,23 @@ closure_js_library(
 alias(
     name = "nativemessagingtransport",
     actual = ":crosspagechannel",
+)
+
+closure_js_library(
+    name = "nativemessagingtransport_impl",
+    srcs = ["nativemessagingtransport.js"],
+    lenient = True,
+    deps = [
+        ":crosspagechannelrole",
+        ":transport",
+        ":xpc",
+        "//closure/goog/asserts",
+        "//closure/goog/disposable",
+        "//closure/goog/events",
+        "//closure/goog/log",
+        "//closure/goog/timer",
+        "//third_party/closure/goog/mochikit/async:deferred",
+    ],
 )
 
 closure_js_library(

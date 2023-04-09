@@ -21,12 +21,13 @@ closure_js_library(
     srcs = [
         "entry.js",
         "filesystem.js",
-        "filewriter.js",
     ],
     lenient = True,
+    exports = [":filewriter_impl"],
     deps = [
         ":blob",
         ":file",
+        ":filewriter_impl",
         ":progressevent",
         "//closure/goog/array",
         "//closure/goog/asserts",
@@ -74,6 +75,23 @@ alias(
 alias(
     name = "filewriter",
     actual = ":filesystem",
+)
+
+closure_js_library(
+    name = "filewriter_impl",
+    testonly = True,
+    srcs = ["filewriter.js"],
+    lenient = True,
+    deps = [
+        ":blob",
+        ":file",
+        ":progressevent",
+        "//closure/goog/events:eventtarget",
+        "//closure/goog/fs:error",
+        "//closure/goog/fs:filesaver",
+        "//closure/goog/string",
+        "//closure/goog/timer",
+    ],
 )
 
 closure_js_library(

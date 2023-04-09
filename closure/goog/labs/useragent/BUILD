@@ -7,7 +7,6 @@ licenses(["notice"])
 closure_js_library(
     name = "useragent",
     srcs = [],
-    lenient = True,
     exports = [
         ":browser",
         ":device",
@@ -92,6 +91,7 @@ closure_js_library(
 
 closure_js_library(
     name = "testutil",
+    testonly = 1,
     srcs = [
         "testutil.js",
     ],

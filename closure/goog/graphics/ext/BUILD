@@ -17,6 +17,17 @@ alias(
 )
 
 closure_js_library(
+    name = "element_impl",
+    srcs = ["element.js"],
+    lenient = True,
+    deps = [
+        ":coordinates",
+        "//closure/goog/events:eventtarget",
+        "//closure/goog/functions",
+    ],
+)
+
+closure_js_library(
     name = "ellipse",
     srcs = ["ellipse.js"],
     lenient = True,
@@ -42,14 +53,15 @@ closure_js_library(
 
 closure_js_library(
     name = "graphics",
-    srcs = [
-        "element.js",
-        "graphics.js",
-        "group.js",
-    ],
+    srcs = ["graphics.js"],
     lenient = True,
+    exports = [
+        ":element_impl",
+        ":group_impl",
+    ],
     deps = [
         ":coordinates",
+        ":group_impl",
         "//closure/goog/array",
         "//closure/goog/dom",
         "//closure/goog/events",
@@ -66,6 +78,16 @@ closure_js_library(
 alias(
     name = "group",
     actual = ":graphics",
+)
+
+closure_js_library(
+    name = "group_impl",
+    srcs = ["group.js"],
+    lenient = True,
+    deps = [
+        ":element_impl",
+        "//closure/goog/array",
+    ],
 )
 
 closure_js_library(

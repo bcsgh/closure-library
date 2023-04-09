@@ -52,6 +52,15 @@ closure_js_library(
 )
 
 closure_js_library(
+    name = "legacy_throttle",
+    srcs = ["legacy_throttle.js"],
+    lenient = True,
+    deps = [
+        ":throttle_impl",
+    ],
+)
+
+closure_js_library(
     name = "nexttick",
     srcs = [
         "nexttick.js",
@@ -97,10 +106,15 @@ closure_js_library(
 
 closure_js_library(
     name = "throttle",
-    srcs = [
-        "legacy_throttle.js",
-        "throttle.js",
+    exports = [
+        ":legacy_throttle",
+        ":throttle_impl",
     ],
+)
+
+closure_js_library(
+    name = "throttle_impl",
+    srcs = ["throttle.js"],
     lenient = True,
     deps = [
         "//closure/goog/disposable",

@@ -8,6 +8,7 @@ closure_js_library(
     name = "html_test_vectors_js",
     srcs = ["html_test_vectors.js"],
     lenient = True,
+    testonly = True,
 )
 
 closure_js_library(
